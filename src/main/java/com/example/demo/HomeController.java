@@ -15,26 +15,26 @@ import javax.validation.Valid;
 public class HomeController {
 
     @Autowired
-    JobRepository jobRepository;
+    TaskRepository taskRepository;
 
     @RequestMapping("/")
-    public String listJobs(Model model){
-        model.addAttribute("jobs", jobRepository.findAll());
+    public String listTasks(Model model){
+        model.addAttribute("tasks", taskRepository.findAll());
         return "list";
     }
 
     @GetMapping("/add")
-    public String jobForm(Model model){
-        model.addAttribute("job", new Job());
-        return "jobform";
+    public String taskForm(Model model){
+        model.addAttribute("todo", new Todo());
+        return "taskform";
     }
 
     @PostMapping("/process")
-    public String processForm(@Valid Job job, BindingResult result){
+    public String processForm(@Valid Todo todo, BindingResult result){
         if (result.hasErrors()){
-            return "jobform";
+            return "taskform";
         }
-        jobRepository.save(job);
+        taskRepository.save(todo);
         return "redirect:/";
     }
 }
